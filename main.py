@@ -2,11 +2,11 @@ from lib2to3.pgen2 import driver
 from tkinter import *
 from tkinter import ttk  # for dropdown menu
 from methods import *
-
+driver=init_driver()
 
 # Main GUI window
 window = Tk()
-window.title("Apollo Scraper Tool")
+window.title("Scraper Tool")
 
 # Tools dropdown menu
 tool_label = Label(window, text="Select Tool:")
@@ -17,19 +17,22 @@ tool_variable.set(tool_options[0])  # Set default option
 tool_dropdown = ttk.Combobox(window, values=tool_options, textvariable=tool_variable)
 tool_dropdown.pack(pady=5)
 
-driver=init_driver()
 # add login and logout button side by side
 login_button = Button(window, text="Login", command=lambda: login_apollo(driver, tool_variable.get()))
 login_button.pack(pady=10)
-
-logout_button = Button(window, text="Logout", command=lambda: driver.quit())
-logout_button.pack(pady=10)
 
 # URL input field
 url_label = Label(window, text="Enter URL:")
 url_label.pack(pady=5)
 url_entry = Entry(window)
 url_entry.pack(pady=5)
+
+# List Name input field
+list_name_label = Label(window, text="List Name:")
+list_name_label.pack(pady=5)
+list_name_entry = Entry(window)
+list_name_entry.pack(pady=5)
+
 
 # Number of pages input field
 num_pages_label = Label(window, text="Number of Pages:")
@@ -38,7 +41,7 @@ num_pages_entry = Entry(window)
 num_pages_entry.pack(pady=5)
 
 # Scrape button
-scrape_button = Button(window, text="Scrape", command=lambda: scrape_apollo(tool_variable.get(), url_entry.get(), num_pages_entry.get()))
+scrape_button = Button(window, text="Scrape", command=lambda: automate_prospecting(driver, url_entry.get(),list_name_entry.get() ,num_pages_entry.get()))
 scrape_button.pack(pady=10)
 
 # Separator line
