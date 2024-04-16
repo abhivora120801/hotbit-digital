@@ -18,8 +18,12 @@ tool_dropdown = ttk.Combobox(window, values=tool_options, textvariable=tool_vari
 tool_dropdown.pack(pady=5)
 
 driver=init_driver()
-# add login button 
-login_button = Button(window, text="Login", command=lambda: login_apollo(driver=driver,user=tool_variable.get()))
+# add login and logout button side by side
+login_button = Button(window, text="Login", command=lambda: login_apollo(driver, tool_variable.get()))
+login_button.pack(pady=10)
+
+logout_button = Button(window, text="Logout", command=lambda: driver.quit())
+logout_button.pack(pady=10)
 
 # URL input field
 url_label = Label(window, text="Enter URL:")
