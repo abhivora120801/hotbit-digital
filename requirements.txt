@@ -3,3 +3,4 @@ selenium
 webdriver_manager
 PIL
 beautifulsoup4
+tkinter
