@@ -1,5 +1,7 @@
+from lib2to3.pgen2 import driver
 from tkinter import *
 from tkinter import ttk  # for dropdown menu
+from methods import *
 
 
 # Main GUI window
@@ -9,11 +11,15 @@ window.title("Apollo Scraper Tool")
 # Tools dropdown menu
 tool_label = Label(window, text="Select Tool:")
 tool_label.pack(pady=5)
-tool_options = ["-- Select Tool --","tools", "achugh", "avora"]  # Replace with actual tools
+tool_options = ["-- Select User --","tools", "achugh", "avora"]  # Replace with actual tools
 tool_variable = StringVar(window)
 tool_variable.set(tool_options[0])  # Set default option
 tool_dropdown = ttk.Combobox(window, values=tool_options, textvariable=tool_variable)
 tool_dropdown.pack(pady=5)
+
+driver=init_driver()
+# add login button 
+login_button = Button(window, text="Login", command=lambda: login_apollo(driver=driver,user=tool_variable.get()))
 
 # URL input field
 url_label = Label(window, text="Enter URL:")
