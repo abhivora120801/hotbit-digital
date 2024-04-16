@@ -1,5 +1,3 @@
-from distutils.command import upload
-from fileinput import filename
 from random import randint
 from xml import dom
 import boto3
@@ -7,8 +5,6 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
-from io import BytesIO
-from PIL import Image
 import time
 import csv
 from bs4 import BeautifulSoup 
