@@ -8,6 +8,10 @@ driver=init_driver()
 window = Tk()
 window.title("Scraper Tool")
 
+# Quit button
+quit_button = Button(window, text="Quit", command=driver.quit)
+quit_button.pack(pady=10)
+
 # Tools dropdown menu
 tool_label = Label(window, text="Select Tool:")
 tool_label.pack(pady=5)
