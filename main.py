@@ -42,9 +42,6 @@ root.geometry("800x600")  # Adjust window size as needed
 chrome_driver_label = tk.Label(root, text="Chrome Driver")
 chrome_driver_label.pack(pady=10)
 
-global driver
-driver = None  # Declare the "driver" variable
-
 init_driver_button = tk.Button(root, text="Init Driver", command=lambda: initialize_driver)  # Placeholder for Apollo driver
 init_driver_button.pack(padx=10, pady=5)
 
