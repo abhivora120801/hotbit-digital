@@ -157,13 +157,19 @@ date_picker_label = tk.Label(root, text="Select Date:")
 date_picker_label.pack()
 
 date_picker_value = tk.StringVar()
-date_picker = ttk.Combobox(root, textvariable=date_picker_value, state="readonly")
-date_picker["values"] = ["Today", "Yesterday", "Last 7 Days", "Last 30 Days", "Custom Date"]
-date_picker.current(0)  # Pre-select "Today" (optional)
+date_picker = tk.Entry(root)
 
-def on_date_picker_change(event):
-    print(f"Selected Date: {date_picker.get()}")
-date_picker.bind("<<ComboboxSelected>>", on_date_picker_change)
+# Date picker functionality
+def select_date():
+    date_picker_value.set(datetime.datetime.now().strftime("%d-%m-%y"))
+    date_picker.config(textvariable=date_picker_value)
+
+date_picker_button = tk.Button(root, text="Select Date", command=select_date)
+date_picker_button.pack()
+
+
+
+
 
 date_picker.pack()
 
