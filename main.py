@@ -58,6 +58,10 @@ sales_navigator_frame = tk.Frame(root)
 sales_navigator_frame.pack(side=tk.RIGHT, padx=10, pady=10)
 
 # Apollo section
+
+apollo_label = tk.Label(apollo_frame, text="Apollo Scraper")
+apollo_label.pack()
+
 apollo_user_label = tk.Label(apollo_frame, text="User:")
 apollo_user_label.pack()
 
@@ -87,6 +91,86 @@ apollo_num_pages_label.pack()
 
 apollo_num_pages_entry = tk.Entry(apollo_frame)
 apollo_num_pages_entry.pack()
+
+apollo_scrape_button = tk.Button(apollo_frame, text="Scrape", command=lambda: scrape_apollo(apollo_url_entry.get(), apollo_list_name_entry.get(), int(apollo_num_pages_entry.get())))
+apollo_scrape_button.pack(pady=5)
+
+# Sales Navigator section
+
+sales_navigator_label = tk.Label(sales_navigator_frame, text="Sales Navigator Scraper")
+sales_navigator_label.pack()
+
+sales_navigator_user_label = tk.Label(sales_navigator_frame, text="User:")
+sales_navigator_user_label.pack()
+
+# Use a Combobox or other suitable widget for user selection
+sales_navigator_user_combo = ttk.Combobox(sales_navigator_frame, values=user_options, state="readonly")
+sales_navigator_user_combo.current(0)  # Pre-select the first user (optional)
+sales_navigator_user_combo.pack()
+
+sales_navigator_login_button = tk.Button(sales_navigator_frame, text="Login", command=lambda: login_sales_navigator(sales_navigator_user_combo.get()))
+sales_navigator_login_button.pack(pady=5)
+
+sales_navigator_url_label = tk.Label(sales_navigator_frame, text="URL:")
+sales_navigator_url_label.pack()
+
+sales_navigator_url_entry = tk.Entry(sales_navigator_frame)
+sales_navigator_url_entry.pack()
+
+sales_navigator_list_name_label = tk.Label(sales_navigator_frame, text="List Name:")
+sales_navigator_list_name_label.pack()
+
+sales_navigator_list_name_entry = tk.Entry(sales_navigator_frame)
+sales_navigator_list_name_entry.pack()
+
+sales_navigator_num_pages_label = tk.Label(sales_navigator_frame, text="Number of Pages:")
+sales_navigator_num_pages_label.pack()
+
+sales_navigator_num_pages_entry = tk.Entry(sales_navigator_frame)
+sales_navigator_num_pages_entry.pack()
+
+sales_navigator_scrape_button = tk.Button(sales_navigator_frame, text="Scrape", command=lambda: scrape_sales_navigator(sales_navigator_url_entry.get(), sales_navigator_list_name_entry.get(), int(sales_navigator_num_pages_entry.get())))
+sales_navigator_scrape_button.pack(pady=5)
+
+# Separator
+separator_2 = ttk.Separator(root, orient=tk.HORIZONTAL)
+separator_2.pack(fill=tk.X, padx=10, pady=10)
+
+# Data Extraction section
+
+data_extraction_label = tk.Label(root, text="Data Extraction")
+data_extraction_label.pack()
+
+campaign_name_label = tk.Label(root, text="Campaign Name:")
+campaign_name_label.pack()
+
+campaign_name_entry = tk.Entry(root)
+campaign_name_entry.pack()
+
+num_pages_label = tk.Label(root, text="Number of Pages:")
+num_pages_label.pack()
+
+num_pages_entry = tk.Entry(root)
+num_pages_entry.pack()
+
+date_picker_label = tk.Label(root, text="Select Date:")
+date_picker_label.pack()
+
+date_picker_value = tk.StringVar()
+date_picker = ttk.Combobox(root, textvariable=date_picker_value, state="readonly")
+date_picker["values"] = ["Today", "Yesterday", "Last 7 Days", "Last 30 Days", "Custom Date"]
+date_picker.current(0)  # Pre-select "Today" (optional)
+
+def on_date_picker_change(event):
+    print(f"Selected Date: {date_picker.get()}")
+date_picker.bind("<<ComboboxSelected>>", on_date_picker_change)
+
+date_picker.pack()
+
+extract_data_button = tk.Button(root, text="Extract Data", command=lambda: extract_data(campaign_name_entry.get(), int(num_pages_entry.get()), date_picker.get()))
+extract_data_button.pack(pady=5)
+
+
 
 
 root.mainloop()  # Start the GUI
