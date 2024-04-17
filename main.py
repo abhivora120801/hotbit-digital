@@ -1,5 +1,4 @@
 from ast import main
-from lib2to3.pgen2 import driver
 import tkinter as tk
 from tkinter import ttk  # For enhanced widgets (optional)
 from tkinter import filedialog  # For file selection (optional)
@@ -44,6 +43,7 @@ def extract_data(campaign_name, num_pages, date_picker_value, platform, country)
         main_data,bucket_name,csv_file_name=get_data(main_driver,num_pages,campaign_name,country,date_picker_value)
         global csv_url
         csv_url=write_to_csv(data=main_data,filename=csv_file_name,bucket_name=bucket_name)
+        csv_url_text.insert(tk.END, csv_url)  # Insert the CSV URL (replace with actual URL)
 
         
 
@@ -218,10 +218,10 @@ csv_url_label.pack()
 
 csv_url_text = tk.Text(root, height=1, width=50)
 csv_url_text.pack()
+csv_url_text.config(state=tk.DISABLED)  # Disable editing
+
 
 # Placeholder for displaying the CSV URL
-global csv_url
-csv_url_text.insert(tk.END, csv_url)  # Insert the CSV URL (replace with actual URL)
-csv_url_text.config(state=tk.DISABLED)  # Disable editing
+
 
 root.mainloop()  # Start the GUI
