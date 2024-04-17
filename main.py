@@ -221,7 +221,7 @@ csv_url_text.pack()
 csv_url_text.config(state=tk.DISABLED)  # Disable editing
 
 # copy button to copy csv url
-copy_button = tk.Button(root, text="Copy", command=lambda: root.clipboard_append(csv_url))
+copy_button = tk.Button(root, text="Copy", command=lambda: root.clipboard_append(csv_url_text.get("1.0", tk.END)))
 copy_button.pack(pady=5)
 
 
