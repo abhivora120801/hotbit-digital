@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import ttk  # For enhanced widgets (optional)
 from tkinter import filedialog  # For file selection (optional)
 import datetime  # For date picker functionality
+from methods import *
 
 # Placeholder functions (replace with your scraper logic)
 def init_apollo_driver():
@@ -40,10 +41,13 @@ root.geometry("800x600")  # Adjust window size as needed
 chrome_driver_label = tk.Label(root, text="Chrome Driver")
 chrome_driver_label.pack(pady=10)
 
-init_driver_button = tk.Button(root, text="Init Driver", command=init_apollo_driver)  # Placeholder for Apollo driver
+global driver
+driver = None  # Declare the "driver" variable
+
+init_driver_button = tk.Button(root, text="Init Driver", command=lambda: driver=init_driver())  # Placeholder for Apollo driver
 init_driver_button.pack(padx=10, pady=5)
 
-quit_driver_button = tk.Button(root, text="Quit Driver", command=quit_apollo_driver)  # Placeholder for Apollo driver
+quit_driver_button = tk.Button(root, text="Quit Driver", command=driver.quit())  # Placeholder for Apollo driver
 quit_driver_button.pack(padx=10, pady=5)
 
 # Separator
