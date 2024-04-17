@@ -167,10 +167,13 @@ date_picker_label = tk.Label(root, text="Select Date:")
 date_picker_label.pack()
 
 date_picker_value = tk.StringVar()
-date_picker = tk.Entry(root)
-date_picker_value.set(datetime.datetime.now().strftime("%d-%m-%y"))
-date_picker.config(textvariable=date_picker_value)
+today = datetime.datetime.now()
+date_options = [today.strftime("%d-%m-%Y")]  # Initialize with today's date
+for i in range(1, 28):
+    date_options.append((today + datetime.timedelta(days=i)).strftime("%d-%m-%Y"))  # Add next 28 days
 
+date_picker = ttk.Combobox(root, values=date_options, textvariable=date_picker_value, state="readonly")
+date_picker.current(0)  # Pre-select today's date
 date_picker.pack()
 
 extract_data_button = tk.Button(root, text="Extract Data", command=lambda: extract_data(campaign_name_entry.get(), int(num_pages_entry.get()), date_picker.get()))
