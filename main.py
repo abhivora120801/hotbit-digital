@@ -1,3 +1,4 @@
+from ast import main
 from lib2to3.pgen2 import driver
 import tkinter as tk
 from tkinter import ttk  # For enhanced widgets (optional)
@@ -5,25 +6,26 @@ from tkinter import filedialog  # For file selection (optional)
 import datetime  # For date picker functionality
 from methods import *
 
+global csv_url
 
-  # Declare the "driver" variable as global
 
 # Placeholder functions (replace with your scraper logic)
 def initialize_driver():
      # Access global driver (if declared)
-    global driver
-    driver = init_driver()  # Call init_driver and store the returned value
+    global main_driver
+    main_driver = init_driver()  # Call init_driver and store the returned value
 
 def quit_apollo_driver():
-    global driver
-    driver.quit()  # Quit the driver
+    global main_driver
+    main_driver.quit()  # Quit the driver
 
 def login_apollo_(user):
-    global driver
-    login_apollo(driver, user)
+    global main_driver
+    login_apollo(main_driver, user)
 
 def scrape_apollo(url, list_name, num_pages):
-    print(f"Scraping Apollo: URL: {url}, List Name: {list_name}, Pages: {num_pages}")
+    global main_driver
+    automate_prospecting_apollo(main_driver,url, list_name,num_pages)
 
 def init_sales_navigator_driver():
     print("Initializing Sales Navigator driver...")
@@ -32,13 +34,25 @@ def quit_sales_navigator_driver():
     print("Quitting Sales Navigator driver...")
 
 def login_sales_navigator(user):
-    print(f"Logging in to Sales Navigator as {user}...")
+    global main_driver
+    login_linkedin_sales_navigator(main_driver, user)
 
 def scrape_sales_navigator(url, list_name, num_pages):
     print(f"Scraping Sales Navigator: URL: {url}, List Name: {list_name}, Pages: {num_pages}")
 
-def extract_data(campaign_name, num_pages, date_picker_value):
-    print(f"Extracting data: Campaign Name: {campaign_name}, Pages: {num_pages}, Date: {date_picker_value}")
+def extract_data(campaign_name, num_pages, date_picker_value, platform, country):
+    if platform == "apollo":
+        main_data,bucket_name,csv_file_name=get_data(main_driver,num_pages,campaign_name,country,date_picker_value)
+        global csv_url
+        csv_url=write_to_csv(data=main_data,filename=csv_file_name,bucket_name=bucket_name)
+        return csv_url
+
+        
+
+
+
+    elif platform == "sales_navigator":
+        print(f"Extracting data for Sales Navigator: Campaign Name: {campaign_name}, Pages: {num_pages}, Date: {date_picker_value}")
 
 # Create the main window
 root = tk.Tk()
@@ -101,7 +115,7 @@ apollo_num_pages_label.pack()
 apollo_num_pages_entry = tk.Entry(apollo_frame)
 apollo_num_pages_entry.pack()
 
-apollo_scrape_button = tk.Button(apollo_frame, text="Scrape", command=lambda: scrape_apollo(apollo_url_entry.get(), apollo_list_name_entry.get(), int(apollo_num_pages_entry.get())))
+apollo_scrape_button = tk.Button(apollo_frame, text="Prospect", command=lambda: scrape_apollo(apollo_url_entry.get(), apollo_list_name_entry.get(), int(apollo_num_pages_entry.get())))
 apollo_scrape_button.pack(pady=5)
 
 # Sales Navigator section
@@ -138,7 +152,7 @@ sales_navigator_num_pages_label.pack()
 sales_navigator_num_pages_entry = tk.Entry(sales_navigator_frame)
 sales_navigator_num_pages_entry.pack()
 
-sales_navigator_scrape_button = tk.Button(sales_navigator_frame, text="Scrape", command=lambda: scrape_sales_navigator(sales_navigator_url_entry.get(), sales_navigator_list_name_entry.get(), int(sales_navigator_num_pages_entry.get())))
+sales_navigator_scrape_button = tk.Button(sales_navigator_frame, text="Prospect", command=lambda: scrape_sales_navigator(sales_navigator_url_entry.get(), sales_navigator_list_name_entry.get(), int(sales_navigator_num_pages_entry.get())))
 sales_navigator_scrape_button.pack(pady=5)
 
 # Separator
@@ -146,6 +160,16 @@ separator_2 = ttk.Separator(root, orient=tk.HORIZONTAL)
 separator_2.pack(fill=tk.X, padx=10, pady=10)
 
 # Data Extraction section
+
+# platform  dropdown
+platform_label = tk.Label(root, text="Platform:")
+platform_label.pack()
+
+# Use a Combobox or other suitable widget for country selection
+platform_options = ["apollo", "sales_navigator"]  # Replace with your country data
+platform_combo = ttk.Combobox(root, values=platform_options, state="readonly")
+platform_combo.current(0)  # Pre-select the first country (optional)
+platform_combo.pack()
 
 data_extraction_label = tk.Label(root, text="Data Extraction")
 data_extraction_label.pack()
@@ -185,10 +209,19 @@ date_picker = ttk.Combobox(root, values=date_options, textvariable=date_picker_v
 date_picker.current(0)  # Pre-select today's date
 date_picker.pack()
 
-extract_data_button = tk.Button(root, text="Extract Data", command=lambda: extract_data(campaign_name_entry.get(), int(num_pages_entry.get()), date_picker.get()))
+extract_data_button = tk.Button(root, text="Extract Data", command=lambda: csv_url=extract_data(campaign_name_entry.get(), int(num_pages_entry.get()), date_picker.get(), platform_combo.get(), campaign_country_combo.get()))
 extract_data_button.pack(pady=5)
 
+# read only text box for csv url
+csv_url_label = tk.Label(root, text="CSV URL:")
+csv_url_label.pack()
 
+csv_url_text = tk.Text(root, height=1, width=50)
+csv_url_text.pack()
 
+# Placeholder for displaying the CSV URL
+
+csv_url_text.insert(tk.END, csv_url)  # Insert the CSV URL (replace with actual URL)
+csv_url_text.config(state=tk.DISABLED)  # Disable editing
 
 root.mainloop()  # Start the GUI
