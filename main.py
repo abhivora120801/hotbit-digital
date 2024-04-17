@@ -6,14 +6,16 @@ import datetime  # For date picker functionality
 from methods import *
 
 
-global driver  # Declare the "driver" variable as global
+  # Declare the "driver" variable as global
 
 # Placeholder functions (replace with your scraper logic)
 def initialize_driver():
      # Access global driver (if declared)
+    global driver
     driver = init_driver()  # Call init_driver and store the returned value
 
 def quit_apollo_driver():
+    global driver
     driver.quit()  # Quit the driver
 
 def login_apollo(user):
