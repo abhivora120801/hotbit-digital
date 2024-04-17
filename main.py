@@ -5,8 +5,9 @@ import datetime  # For date picker functionality
 from methods import *
 
 # Placeholder functions (replace with your scraper logic)
-def init_apollo_driver():
-    print("Initializing Apollo driver...")
+def initialize_driver():
+    global driver  # Access global driver (if declared)
+    driver = init_driver()  # Call init_driver and store the returned value
 
 def quit_apollo_driver():
     print("Quitting Apollo driver...")
@@ -44,10 +45,10 @@ chrome_driver_label.pack(pady=10)
 global driver
 driver = None  # Declare the "driver" variable
 
-init_driver_button = tk.Button(root, text="Init Driver", command=lambda: driver=init_driver())  # Placeholder for Apollo driver
+init_driver_button = tk.Button(root, text="Init Driver", command=lambda: initialize_driver)  # Placeholder for Apollo driver
 init_driver_button.pack(padx=10, pady=5)
 
-quit_driver_button = tk.Button(root, text="Quit Driver", command=driver.quit())  # Placeholder for Apollo driver
+quit_driver_button = tk.Button(root, text="Quit Driver", command=lambda: driver.quit)  # Placeholder for Apollo driver
 quit_driver_button.pack(padx=10, pady=5)
 
 # Separator
