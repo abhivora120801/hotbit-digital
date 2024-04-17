@@ -159,7 +159,8 @@ separator_2 = ttk.Separator(root, orient=tk.HORIZONTAL)
 separator_2.pack(fill=tk.X, padx=10, pady=10)
 
 # Data Extraction section
-
+data_extraction_label = tk.Label(root, text="Data Extraction")
+data_extraction_label.pack()
 # platform  dropdown
 platform_label = tk.Label(root, text="Platform:")
 platform_label.pack()
@@ -169,9 +170,6 @@ platform_options = ["apollo", "sales_navigator"]  # Replace with your country da
 platform_combo = ttk.Combobox(root, values=platform_options, state="readonly")
 platform_combo.current(0)  # Pre-select the first country (optional)
 platform_combo.pack()
-
-data_extraction_label = tk.Label(root, text="Data Extraction")
-data_extraction_label.pack()
 
 campaign_name_label = tk.Label(root, text="Campaign Name:")
 campaign_name_label.pack()
