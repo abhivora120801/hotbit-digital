@@ -41,13 +41,8 @@ def scrape_sales_navigator(url, list_name, num_pages):
 def extract_data(campaign_name, num_pages, date_picker_value, platform, country):
     if platform == "apollo":
         main_data,bucket_name,csv_file_name=get_data(main_driver,num_pages,campaign_name,country,date_picker_value)
-        global csv_url
         csv_url=write_to_csv(data=main_data,filename=csv_file_name,bucket_name=bucket_name)
         csv_url_text.insert(tk.END, csv_url)  # Insert the CSV URL (replace with actual URL)
-
-        
-
-
 
     elif platform == "sales_navigator":
         print(f"Extracting data for Sales Navigator: Campaign Name: {campaign_name}, Pages: {num_pages}, Date: {date_picker_value}")
@@ -56,7 +51,7 @@ def extract_data(campaign_name, num_pages, date_picker_value, platform, country)
 def copy_to_clipboard():
     # Retrieve content
     root.clipboard_clear()  # Clear any existing clipboard content (optional)
-    root.clipboard_append(csv_url_text.get("1.0", tk.END))  # Write csv_url to the clipboard
+    root.clipboard_append(csv_url_text.get("1.0", tk.END).strip())  # Write csv_url to the clipboard
 
 # Create the main window
 root = tk.Tk()
@@ -98,7 +93,7 @@ apollo_user_combo = ttk.Combobox(apollo_frame, values=['avora', 'tools', 'achugh
 apollo_user_combo.current(0)  # Pre-select the first user (optional)
 apollo_user_combo.pack()
 
-apollo_login_button = tk.Button(apollo_frame, text="Login", command=lambda: login_apollo_(apollo_user_combo.get()))
+apollo_login_button = tk.Button(apollo_frame, text="Login", command=lambda: login_apollo_(apollo_user_combo.get().strip()))
 apollo_login_button.pack(pady=5)
 
 apollo_url_label = tk.Label(apollo_frame, text="URL:")
@@ -119,7 +114,7 @@ apollo_num_pages_label.pack()
 apollo_num_pages_entry = tk.Entry(apollo_frame)
 apollo_num_pages_entry.pack()
 
-apollo_scrape_button = tk.Button(apollo_frame, text="Prospect", command=lambda: scrape_apollo(apollo_url_entry.get(), apollo_list_name_entry.get(), int(apollo_num_pages_entry.get())))
+apollo_scrape_button = tk.Button(apollo_frame, text="Prospect", command=lambda: scrape_apollo(apollo_url_entry.get().strip(), apollo_list_name_entry.get().strip(), int(apollo_num_pages_entry.get())))
 apollo_scrape_button.pack(pady=5)
 
 # Sales Navigator section
@@ -135,7 +130,7 @@ sales_navigator_user_combo = ttk.Combobox(sales_navigator_frame, values=['gourav
 sales_navigator_user_combo.current(0)  # Pre-select the first user (optional)
 sales_navigator_user_combo.pack()
 
-sales_navigator_login_button = tk.Button(sales_navigator_frame, text="Login", command=lambda: login_sales_navigator(sales_navigator_user_combo.get()))
+sales_navigator_login_button = tk.Button(sales_navigator_frame, text="Login", command=lambda: login_sales_navigator(sales_navigator_user_combo.get().strip()))
 sales_navigator_login_button.pack(pady=5)
 
 sales_navigator_url_label = tk.Label(sales_navigator_frame, text="URL:")
@@ -156,7 +151,7 @@ sales_navigator_num_pages_label.pack()
 sales_navigator_num_pages_entry = tk.Entry(sales_navigator_frame)
 sales_navigator_num_pages_entry.pack()
 
-sales_navigator_scrape_button = tk.Button(sales_navigator_frame, text="Prospect", command=lambda: scrape_sales_navigator(sales_navigator_url_entry.get(), sales_navigator_list_name_entry.get(), int(sales_navigator_num_pages_entry.get())))
+sales_navigator_scrape_button = tk.Button(sales_navigator_frame, text="Prospect", command=lambda: scrape_sales_navigator(sales_navigator_url_entry.get().strip(), sales_navigator_list_name_entry.get().strip(), int(sales_navigator_num_pages_entry.get())))
 sales_navigator_scrape_button.pack(pady=5)
 
 # Separator
@@ -213,7 +208,7 @@ date_picker = ttk.Combobox(root, values=date_options, textvariable=date_picker_v
 date_picker.current(0)  # Pre-select today's date
 date_picker.pack()
 
-extract_data_button = tk.Button(root, text="Extract Data", command=lambda: extract_data(campaign_name_entry.get(), int(num_pages_entry.get()), date_picker.get(), platform_combo.get(), campaign_country_combo.get()))
+extract_data_button = tk.Button(root, text="Extract Data", command=lambda: extract_data(campaign_name_entry.get().strip(), int(num_pages_entry.get()), date_picker.get().strip(), platform_combo.get().strip(), campaign_country_combo.get().strip()))
 extract_data_button.pack(pady=5)
 
 # read only text box for csv url
