@@ -6,7 +6,6 @@ from tkinter import filedialog  # For file selection (optional)
 import datetime  # For date picker functionality
 from methods import *
 
-global csv_url
 
 
 # Placeholder functions (replace with your scraper logic)
@@ -52,6 +51,8 @@ def extract_data(campaign_name, num_pages, date_picker_value, platform, country)
 
     elif platform == "sales_navigator":
         print(f"Extracting data for Sales Navigator: Campaign Name: {campaign_name}, Pages: {num_pages}, Date: {date_picker_value}")
+
+
 
 # Create the main window
 root = tk.Tk()
@@ -219,7 +220,7 @@ csv_url_text = tk.Text(root, height=1, width=50)
 csv_url_text.pack()
 
 # Placeholder for displaying the CSV URL
-
+global csv_url
 csv_url_text.insert(tk.END, csv_url)  # Insert the CSV URL (replace with actual URL)
 csv_url_text.config(state=tk.DISABLED)  # Disable editing
 
