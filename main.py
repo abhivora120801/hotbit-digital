@@ -1,24 +1,28 @@
 from tkinter import *
 from tkinter import ttk  # for separator and dropdown
+from methods import*
 
-# Placeholder functions for now, replace with your actual scraping logic
-def login_apollo(user_account, url, listname, num_pages):
-    print(f"Logging in to Apollo with {user_account}, Scraping: {url}, List: {listname}, Pages: {num_pages}")
-
-def login_linkedin(user_account, url, listname, num_pages):
-    print(f"Logging in to LinkedIn Sales Navigator with {user_account}, Scraping: {url}, List: {listname}, Pages: {num_pages}")
-
-def scrape_apollo(user_account, url, listname, num_pages):
-    print(f"Scraping with Apollo using account: {user_account}, URL: {url}, List: {listname}, Pages: {num_pages}")
-    # Replace with your actual scraping logic
-
-def scrape_linkedin(user_account, url, listname, num_pages):
-    print(f"Scraping with LinkedIn Sales Navigator using account: {user_account}, URL: {url}, List: {listname}, Pages: {num_pages}")
-    # Replace with your actual scraping logic
+# Initialize Chrome Driver
+driver=None
 
 # Main GUI window
 window = Tk()
 window.title("Scraper Tool")
+
+# Chrome Driver label
+driver_label = Label(window, text="Chrome Driver", font=("Arial", 16))
+driver_label.pack(pady=10)
+
+# Buttons side-by-side
+init_driver_button = Button(window, text="Init Driver", command=lambda: driver=init_driver())
+init_driver_button.pack(side=LEFT, padx=10, pady=5)
+
+quit_driver_button = Button(window, text="Quit Driver", command=driver.quit)
+quit_driver_button.pack(side=RIGHT, padx=10, pady=5)
+
+# Separator line
+separator = ttk.Separator(window, orient=HORIZONTAL)
+separator.pack(fill=X, padx=20, pady=10)
 
 # Apollo and LinkedIn frames
 apollo_frame = Frame(window)
