@@ -168,18 +168,8 @@ date_picker_label.pack()
 
 date_picker_value = tk.StringVar()
 date_picker = tk.Entry(root)
-
-# Date picker functionality
-def select_date():
-    date_picker_value.set(datetime.datetime.now().strftime("%d-%m-%y"))
-    date_picker.config(textvariable=date_picker_value)
-
-date_picker_button = tk.Button(root, text="Today", command=select_date)
-date_picker_button.pack()
-
-
-
-
+date_picker_value.set(datetime.datetime.now().strftime("%d-%m-%y"))
+date_picker.config(textvariable=date_picker_value)
 
 date_picker.pack()
 
