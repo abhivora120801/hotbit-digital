@@ -220,8 +220,9 @@ csv_url_text = tk.Text(root, height=1, width=50)
 csv_url_text.pack()
 csv_url_text.config(state=tk.DISABLED)  # Disable editing
 
-
-# Placeholder for displaying the CSV URL
+# copy button to copy csv url
+copy_button = tk.Button(root, text="Copy", command=lambda: root.clipboard_append(csv_url))
+copy_button.pack(pady=5)
 
 
 root.mainloop()  # Start the GUI
