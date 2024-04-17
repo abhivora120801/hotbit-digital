@@ -1,16 +1,20 @@
+from lib2to3.pgen2 import driver
 import tkinter as tk
 from tkinter import ttk  # For enhanced widgets (optional)
 from tkinter import filedialog  # For file selection (optional)
 import datetime  # For date picker functionality
 from methods import *
 
+
+global driver  # Declare the "driver" variable as global
+
 # Placeholder functions (replace with your scraper logic)
 def initialize_driver():
-    global driver  # Access global driver (if declared)
+     # Access global driver (if declared)
     driver = init_driver()  # Call init_driver and store the returned value
 
 def quit_apollo_driver():
-    print("Quitting Apollo driver...")
+    driver.quit()  # Quit the driver
 
 def login_apollo(user):
     print(f"Logging in to Apollo as {user}...")
@@ -42,10 +46,10 @@ root.geometry("800x600")  # Adjust window size as needed
 chrome_driver_label = tk.Label(root, text="Chrome Driver")
 chrome_driver_label.pack(pady=10)
 
-init_driver_button = tk.Button(root, text="Init Driver", command=lambda: initialize_driver)  # Placeholder for Apollo driver
+init_driver_button = tk.Button(root, text="Init Driver", command=initialize_driver)  # Placeholder for Apollo driver
 init_driver_button.pack(padx=10, pady=5)
 
-quit_driver_button = tk.Button(root, text="Quit Driver", command=lambda: driver.quit)  # Placeholder for Apollo driver
+quit_driver_button = tk.Button(root, text="Quit Driver", command=quit_apollo_driver)  # Placeholder for Apollo driver
 quit_driver_button.pack(padx=10, pady=5)
 
 # Separator
