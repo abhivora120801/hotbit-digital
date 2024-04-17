@@ -67,7 +67,7 @@ apollo_user_label.pack()
 
 # Use a Combobox or other suitable widget for user selection
 user_options = ["user1", "user2", "user3"]  # Replace with your user data
-apollo_user_combo = ttk.Combobox(apollo_frame, values=user_options, state="readonly")
+apollo_user_combo = ttk.Combobox(apollo_frame, values=['avora', 'tools', 'achugh'], state="readonly")
 apollo_user_combo.current(0)  # Pre-select the first user (optional)
 apollo_user_combo.pack()
 
@@ -104,7 +104,7 @@ sales_navigator_user_label = tk.Label(sales_navigator_frame, text="User:")
 sales_navigator_user_label.pack()
 
 # Use a Combobox or other suitable widget for user selection
-sales_navigator_user_combo = ttk.Combobox(sales_navigator_frame, values=user_options, state="readonly")
+sales_navigator_user_combo = ttk.Combobox(sales_navigator_frame, values=['gouravrathore6161'], state="readonly")
 sales_navigator_user_combo.current(0)  # Pre-select the first user (optional)
 sales_navigator_user_combo.pack()
 
@@ -146,6 +146,16 @@ campaign_name_label.pack()
 
 campaign_name_entry = tk.Entry(root)
 campaign_name_entry.pack()
+
+# campaign country dropdown
+campaign_country_label = tk.Label(root, text="Country:")
+campaign_country_label.pack()
+
+# Use a Combobox or other suitable widget for country selection
+country_options = ["US", "Canada", "UK", "Australia"]  # Replace with your country data
+campaign_country_combo = ttk.Combobox(root, values=country_options, state="readonly")
+campaign_country_combo.current(0)  # Pre-select the first country (optional)
+campaign_country_combo.pack()
 
 num_pages_label = tk.Label(root, text="Number of Pages:")
 num_pages_label.pack()
