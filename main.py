@@ -45,7 +45,6 @@ def extract_data(campaign_name, num_pages, date_picker_value, platform, country)
         main_data,bucket_name,csv_file_name=get_data(main_driver,num_pages,campaign_name,country,date_picker_value)
         global csv_url
         csv_url=write_to_csv(data=main_data,filename=csv_file_name,bucket_name=bucket_name)
-        return csv_url
 
         
 
@@ -209,7 +208,7 @@ date_picker = ttk.Combobox(root, values=date_options, textvariable=date_picker_v
 date_picker.current(0)  # Pre-select today's date
 date_picker.pack()
 
-extract_data_button = tk.Button(root, text="Extract Data", command=lambda: csv_url=extract_data(campaign_name_entry.get(), int(num_pages_entry.get()), date_picker.get(), platform_combo.get(), campaign_country_combo.get()))
+extract_data_button = tk.Button(root, text="Extract Data", command=lambda: extract_data(campaign_name_entry.get(), int(num_pages_entry.get()), date_picker.get(), platform_combo.get(), campaign_country_combo.get()))
 extract_data_button.pack(pady=5)
 
 # read only text box for csv url
