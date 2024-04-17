@@ -53,6 +53,10 @@ def extract_data(campaign_name, num_pages, date_picker_value, platform, country)
         print(f"Extracting data for Sales Navigator: Campaign Name: {campaign_name}, Pages: {num_pages}, Date: {date_picker_value}")
 
 
+def copy_to_clipboard():
+    # Retrieve content
+    root.clipboard_clear()  # Clear any existing clipboard content (optional)
+    root.clipboard_append(csv_url_text.get("1.0", tk.END))  # Write csv_url to the clipboard
 
 # Create the main window
 root = tk.Tk()
@@ -221,7 +225,7 @@ csv_url_text.pack()
 csv_url_text.config(state=tk.DISABLED)  # Disable editing
 
 # copy button to copy csv url
-copy_button = tk.Button(root, text="Copy", command=lambda: root.clipboard_append(csv_url_text.get("1.0", tk.END)))
+copy_button = tk.Button(root, text="Copy", command=copy_to_clipboard)
 copy_button.pack(pady=5)
 
 
