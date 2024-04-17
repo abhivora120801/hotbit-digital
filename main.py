@@ -18,8 +18,9 @@ def quit_apollo_driver():
     global driver
     driver.quit()  # Quit the driver
 
-def login_apollo(user):
-    print(f"Logging in to Apollo as {user}...")
+def login_apollo_(user):
+    global driver
+    login_apollo(driver, user)
 
 def scrape_apollo(url, list_name, num_pages):
     print(f"Scraping Apollo: URL: {url}, List Name: {list_name}, Pages: {num_pages}")
@@ -51,7 +52,7 @@ chrome_driver_label.pack(pady=10)
 init_driver_button = tk.Button(root, text="Start Chrome Driver", command=initialize_driver)  # Placeholder for Apollo driver
 init_driver_button.pack(padx=10, pady=5)
 
-quit_driver_button = tk.Button(root, text="Quit Driver", command=quit_apollo_driver)  # Placeholder for Apollo driver
+quit_driver_button = tk.Button(root, text="Quit Chrome Driver", command=quit_apollo_driver)  # Placeholder for Apollo driver
 quit_driver_button.pack(padx=10, pady=5)
 
 # Separator
@@ -79,7 +80,7 @@ apollo_user_combo = ttk.Combobox(apollo_frame, values=['avora', 'tools', 'achugh
 apollo_user_combo.current(0)  # Pre-select the first user (optional)
 apollo_user_combo.pack()
 
-apollo_login_button = tk.Button(apollo_frame, text="Login", command=lambda: login_apollo(apollo_user_combo.get()))
+apollo_login_button = tk.Button(apollo_frame, text="Login", command=lambda: login_apollo_(apollo_user_combo.get()))
 apollo_login_button.pack(pady=5)
 
 apollo_url_label = tk.Label(apollo_frame, text="URL:")
