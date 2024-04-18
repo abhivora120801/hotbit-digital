@@ -38,7 +38,7 @@ def login_sales_navigator(user):
 def scrape_sales_navigator(url, list_name, num_pages):
     print(f"Scraping Sales Navigator: URL: {url}, List Name: {list_name}, Pages: {num_pages}")
 
-def extract_data(campaign_name, num_pages, date_picker_value, platform, country):
+def extract_data_gui(campaign_name, num_pages, date_picker_value, platform, country):
     if platform == "apollo":
         main_data,bucket_name,csv_file_name=get_data(main_driver,num_pages,campaign_name,country,date_picker_value)
         csv_url=write_to_csv(data=main_data,filename=csv_file_name,bucket_name=bucket_name)
@@ -202,7 +202,7 @@ date_picker = ttk.Combobox(root, values=date_options, textvariable=date_picker_v
 date_picker.current(0)  # Pre-select today's date
 date_picker.pack()
 
-extract_data_button = tk.Button(root, text="Extract Data", command=lambda: extract_data(campaign_name_entry.get().strip(), int(num_pages_entry.get()), date_picker.get().strip(), platform_combo.get().strip(), campaign_country_combo.get().strip()))
+extract_data_button = tk.Button(root, text="Extract Data", command=lambda: extract_data_gui(campaign_name_entry.get().strip(), int(num_pages_entry.get()), date_picker.get().strip(), platform_combo.get().strip(), campaign_country_combo.get().strip()))
 extract_data_button.pack(pady=5)
 
 # read only text box for csv url
