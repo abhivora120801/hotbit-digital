@@ -80,7 +80,10 @@ def extract_data(row):
     title = row.findAll('td')[1].text
     company = row.findAll('td')[2].text
     # error handling for company linkedin
-    company_website = row.findAll('td')[2].select('a[href]')[1].get('href')
+    try:
+        company_website = row.findAll('td')[2].select('a[href]')[1].get('href')
+    except:
+        company_website = ''
 
     try:
         com_linked_in = row.findAll('td')[2].select('a[href]')[1].get('href')
@@ -126,7 +129,7 @@ def get_data(main_driver,page_count,industry,country,date):
         for row in table:
             data.append(extract_data(row))
         if i<page_count:
-            main_driver.find_element(By.XPATH,"/html/body/div[2]/div/div[2]/div[2]/div/div[2]/div/div/div[2]/div[2]/div/div/div/div/div/div/div/div[2]/div/div[3]/div/div/div/div/div[3]/div/div[2]/button[2]").click()
+            main_driver.find_element(By.CSS_SELECTOR,"#main-app > div.zp_GhGgo > div > div > div.zp_HrbxN > div.zp_nOEP5 > div > div > div > div > div > div > div > div.zp_pp_6_.zp_L5TKn > div > div.zp_z0WFz.finder-results-list-panel-content > div > div > div > div > div.zp_mYjg6 > div > div.zp_grcVW.zp_JRUjB > button:nth-child(3)").click()
     return data,bucket_name,csv_filename
 
 def create_s3_bucket(s3,bucket_name):
