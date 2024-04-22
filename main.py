@@ -164,7 +164,7 @@ sales_navigator_num_pages_label.pack()
 sales_navigator_num_pages_entry = tk.Entry(sales_navigator_frame)
 sales_navigator_num_pages_entry.pack()
 
-sales_navigator_scrape_button = tk.Button(sales_navigator_frame, text="Prospect", command=lambda: scrape_yellow_pages(sales_navigator_url_entry.get().strip(), int(sales_navigator_num_pages_entry.get()),sales_navigator_list_name_entry.get())
+sales_navigator_scrape_button = tk.Button(sales_navigator_frame, text="Prospect", command=lambda: scrape_yellow_pages(sales_navigator_url_entry.get().strip(), int(sales_navigator_num_pages_entry.get()),sales_navigator_list_name_entry.get()))
 sales_navigator_scrape_button.pack(pady=5)
 
 # Data Extraction section
