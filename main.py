@@ -4,6 +4,7 @@ from tkinter import ttk  # For enhanced widgets (optional)
 from tkinter import filedialog  # For file selection (optional)
 import datetime  # For date picker functionality
 from methods import *
+import os
 
 
 
@@ -35,14 +36,26 @@ def login_sales_navigator(user):
     global main_driver
     login_linkedin_sales_navigator(main_driver, user)
 
-def scrape_sales_navigator(url, list_name, num_pages):
-    print(f"Scraping Sales Navigator: URL: {url}, List Name: {list_name}, Pages: {num_pages}")
+def scrape_yellow_pages(url, num_pages,file_name):
+    global main_driver
+    main_data=extract_data_from_yellow_pages(main_driver, url, num_pages)
+    with open(f"{os.getcwd}/{file_name}", mode='w',newline='') as file:
+        writer = csv.DictWriter(file, fieldnames=main_data[0].keys())
+        writer.writeheader()
+        for row in main_data:
+            writer.writerow(row)
+
+from tkinter import Text  # Import the Text class from the tkinter module
 
 def extract_data_gui(campaign_name, num_pages, date_picker_value, platform, country):
     if platform == "apollo":
         main_data,bucket_name,csv_file_name=get_data(main_driver,num_pages,campaign_name,country,date_picker_value)
         csv_url=write_to_csv(data=main_data,filename=csv_file_name,bucket_name=bucket_name)
+        global csv_url_text
+        csv_url_text.config(state=tk.NORMAL)
+        csv_url_text.delete("1.0", tk.END)
         csv_url_text.insert(tk.END, csv_url)  # Insert the CSV URL (replace with actual URL)
+        csv_url_text.config(state=tk.DISABLED)
 
     elif platform == "sales_navigator":
         print(f"Extracting data for Sales Navigator: Campaign Name: {campaign_name}, Pages: {num_pages}, Date: {date_picker_value}")
@@ -119,19 +132,19 @@ apollo_scrape_button.pack(pady=5)
 
 # Sales Navigator section
 
-sales_navigator_label = tk.Label(sales_navigator_frame, text="Sales Navigator Scraper")
+sales_navigator_label = tk.Label(sales_navigator_frame, text="Yellow Pages Scraper")
 sales_navigator_label.pack()
 
-sales_navigator_user_label = tk.Label(sales_navigator_frame, text="User:")
-sales_navigator_user_label.pack()
+# sales_navigator_user_label = tk.Label(sales_navigator_frame, text="User:")
+# sales_navigator_user_label.pack()
 
-# Use a Combobox or other suitable widget for user selection
-sales_navigator_user_combo = ttk.Combobox(sales_navigator_frame, values=['gouravrathore6161'], state="readonly")
-sales_navigator_user_combo.current(0)  # Pre-select the first user (optional)
-sales_navigator_user_combo.pack()
+# # Use a Combobox or other suitable widget for user selection
+# sales_navigator_user_combo = ttk.Combobox(sales_navigator_frame, values=['gouravrathore6161'], state="readonly")
+# sales_navigator_user_combo.current(0)  # Pre-select the first user (optional)
+# sales_navigator_user_combo.pack()
 
-sales_navigator_login_button = tk.Button(sales_navigator_frame, text="Login", command=lambda: login_sales_navigator(sales_navigator_user_combo.get().strip()))
-sales_navigator_login_button.pack(pady=5)
+# sales_navigator_login_button = tk.Button(sales_navigator_frame, text="Login", command=lambda: login_sales_navigator(sales_navigator_user_combo.get().strip()))
+# sales_navigator_login_button.pack(pady=5)
 
 sales_navigator_url_label = tk.Label(sales_navigator_frame, text="URL:")
 sales_navigator_url_label.pack()
@@ -139,7 +152,7 @@ sales_navigator_url_label.pack()
 sales_navigator_url_entry = tk.Entry(sales_navigator_frame)
 sales_navigator_url_entry.pack()
 
-sales_navigator_list_name_label = tk.Label(sales_navigator_frame, text="List Name:")
+sales_navigator_list_name_label = tk.Label(sales_navigator_frame, text="File Name:")
 sales_navigator_list_name_label.pack()
 
 sales_navigator_list_name_entry = tk.Entry(sales_navigator_frame)
@@ -151,7 +164,7 @@ sales_navigator_num_pages_label.pack()
 sales_navigator_num_pages_entry = tk.Entry(sales_navigator_frame)
 sales_navigator_num_pages_entry.pack()
 
-sales_navigator_scrape_button = tk.Button(sales_navigator_frame, text="Prospect", command=lambda: scrape_sales_navigator(sales_navigator_url_entry.get().strip(), sales_navigator_list_name_entry.get().strip(), int(sales_navigator_num_pages_entry.get())))
+sales_navigator_scrape_button = tk.Button(sales_navigator_frame, text="Prospect", command=lambda: scrape_yellow_pages(sales_navigator_url_entry.get().strip(), int(sales_navigator_num_pages_entry.get()),sales_navigator_list_name_entry.get())
 sales_navigator_scrape_button.pack(pady=5)
 
 # Data Extraction section
@@ -209,6 +222,7 @@ extract_data_button.pack(pady=5)
 csv_url_label = tk.Label(root, text="CSV URL:")
 csv_url_label.pack()
 
+global csv_url_text
 csv_url_text = tk.Text(root, height=1, width=50)
 csv_url_text.pack()
 csv_url_text.config(state=tk.DISABLED)  # Disable editing

@@ -1,6 +1,7 @@
 from random import randint
 from xml import dom
 import boto3
+import requests
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
@@ -9,6 +10,7 @@ import time
 import csv
 from bs4 import BeautifulSoup 
 from credentials import *
+import json
 
 def init_driver():
     options = webdriver.ChromeOptions()
@@ -191,3 +193,40 @@ def automate_prospecting_apollo(main_driver, url, list_name,num):
         # # next page
         # driver.find_element(By.XPATH,'/html/body/div[2]/div/div[2]/div[2]/div/div[2]/div/div/div/div[2]/div/div[2]/div/div/div/div/div/div[2]/div/div[4]/div/div/div/div/div[3]/div/div[2]/button[2]').click()
         # time.sleep(randint(5, 10))
+
+def extract_data_from_yellow_pages(main_driver,url,pages):
+
+    prospect_data=[]
+    for i in range(1, pages+1):
+        if i == 1:
+            main_driver.get(url)
+        else:
+            if '?' in url:
+                main_driver.get(f"{url}&page={i}")
+            else:
+                main_driver.get(f"{url}?page={i}")
+        time.sleep(5)
+        # the_soup = BeautifulSoup(response.text)
+        the_soup = BeautifulSoup(main_driver.page_source)
+        json_tag = the_soup.find_all("script", type="application/ld+json")
+        json_obj = json.loads(json_tag[1].text)
+        for item in json_obj:
+            response_ = requests.get(item['url'])
+            time.sleep(1)
+            the_soup_123 = BeautifulSoup(response_.text)
+            json_tag_123 = the_soup_123.find_all("script", type="application/ld+json")
+            json_obj_123 = json.loads(json_tag_123[0].text)
+            if 'email' in json_obj_123:
+                prospect_data.append({
+                    'company': json_obj_123.get('name'),
+                    'email': json_obj_123.get('email').replace('mailto:', ''),
+                    'phone': json_obj_123.get('telephone'),
+                    'website': json_obj_123.get('url'),
+                    'address': json_obj_123.get('address').get('streetAddress'),
+                    'city': json_obj_123.get('address').get('addressLocality'),
+                    'state': json_obj_123.get('address').get('addressRegion'),
+                    'country': json_obj_123.get('address').get('addressCountry')
+                })
+
+    return prospect_data
+
