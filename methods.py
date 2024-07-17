@@ -131,7 +131,7 @@ def get_data(main_driver,page_count,industry,country,date):
         for row in table:
             data.append(extract_data(row))
         if i<page_count:
-            main_driver.find_element(By.CSS_SELECTOR,"#main-app > div.zp_GhGgo > div > div > div.zp_HrbxN > div.zp_nOEP5 > div > div > div > div > div > div > div > div.zp_pp_6_.zp_L5TKn > div > div.zp_z0WFz.finder-results-list-panel-content > div > div > div > div > div.zp_mYjg6 > div > div.zp_grcVW.zp_JRUjB > button:nth-child(3)").click()
+            main_driver.find_element(By.CSS_SELECTOR,"#main-app > div.zp_GhGgo > div > div > div.zp_HrbxN > div.zp_nOEP5 > div > div.zp_z0WFz > div > div > div > div > div > div > div.zp_pp_6_.zp_L5TKn > div > div.zp_z0WFz.finder-results-list-panel-content > div > div > div > div > div.zp_mYjg6 > div > div.zp_grcVW.zp_JRUjB > button:nth-child(3)").click()
     return data,bucket_name,csv_filename
 
 def create_s3_bucket(s3,bucket_name):
